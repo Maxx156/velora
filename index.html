@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA | Эко-спорт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2e3a;
+            background-color: #f9fbfd;
+            scroll-behavior: smooth;
+        }
+
+        /* Цвета бренда */
+        :root {
+            --primary: #2b5e3b;
+            --primary-light: #4c7f5c;
+            --accent: #e8c07d;
+            --dark: #1f2e3a;
+            --light: #f9fbfd;
+            --gray: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Бургер-меню (мобильное) */
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .burger span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--dark);
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* Герой */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f5f0 100%);
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+            display: block;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #4a5a66;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 20px rgba(43, 94, 59, 0.2);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(43, 94, 59, 0.15);
+        }
+
+        .hero-image {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle cx="250" cy="250" r="200" fill="%232b5e3b" opacity="0.1"/><circle cx="250" cy="250" r="150" fill="%232b5e3b" opacity="0.15"/><circle cx="250" cy="250" r="100" fill="%232b5e3b" opacity="0.2"/><path d="M250 150 L300 250 L250 350 L200 250 Z" fill="%232b5e3b" opacity="0.3"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 400px;
+        }
+
+        /* Особенности */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #5f6c7a;
+            max-width: 700px;
+            margin: 0 auto 60px;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            padding: 40px 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(43,94,59,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(43,94,59,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Продукты */
+        .products {
+            padding: 80px 0;
+            background-color: #f0f5f0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 1px solid rgba(43,94,59,0.1);
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(43,94,59,0.15);
+        }
+
+        .product-img {
+            height: 250px;
+            background-color: var(--gray);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            color: #5f6c7a;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* О бренде */
+        .about {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            color: #4a5a66;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: #5f6c7a;
+        }
+
+        .about-image {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400"><rect x="50" y="50" width="400" height="300" fill="%232b5e3b" opacity="0.1" rx="30"/><circle cx="250" cy="200" r="100" fill="%232b5e3b" opacity="0.2"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 400px;
+        }
+
+        /* Отзывы */
+        .testimonials {
+            padding: 80px 0;
+            background-color: #f0f5f0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid rgba(43,94,59,0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #2d3a45;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--gray);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="20" fill="%232b5e3b" opacity="0.3"/><circle cx="50" cy="90" r="30" fill="%232b5e3b" opacity="0.2"/></svg>');
+            background-size: cover;
+        }
+
+        .author-info h5 {
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: #5f6c7a;
+        }
+
+        /* Подписка */
+        .newsletter {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .newsletter-form .btn {
+            background-color: white;
+            color: var(--primary);
+            box-shadow: none;
+            border: none;
+        }
+
+        .newsletter-form .btn:hover {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--dark);
+            color: #cbd5e0;
+            padding: 60px 0 30px;
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col:first-child .logo {
+            color: white;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-col p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .hero .container,
+            .about .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .about-stats {
+                justify-content: center;
+            }
+
+            .footer-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 30px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                gap: 20px;
+                text-align: center;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">VELORA</a>
+            <nav>
+                <div class="nav-menu" id="navMenu">
+                    <a href="#home">Главная</a>
+                    <a href="#features">Преимущества</a>
+                    <a href="#products">Продукты</a>
+                    <a href="#about">О нас</a>
+                    <a href="#testimonials">Отзывы</a>
+                    <a href="#contact">Контакты</a>
+                </div>
+                <div class="burger" id="burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Герой -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Двигайся с целью <span>VELORA — эко-спорт</span></h1>
+                    <p>Одежда, которая заботится о планете. Переработанные материалы, этичное производство и бескомпромиссный комфорт.</p>
+                    <a href="#products" class="btn">Купить сейчас</a>
+                </div>
+                <div class="hero-image"></div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Почему выбирают VELORA</h2>
+                <p class="section-subtitle">Мы создаём спорт будущего — экологичный, ответственный и стильный.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌿</div>
+                        <h3>Эко-материалы</h3>
+                        <p>100% переработанный полиэстер и органический хлопок. Каждая вещь спасает до 50 литров воды.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Технологичность</h3>
+                        <p>Дышащие ткани, плоские швы, защита от ультрафиолета — для самых интенсивных тренировок.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Этичное производство</h3>
+                        <p>Работаем только с фабриками, сертифицированными по стандартам справедливой торговли.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Продукты -->
+        <section class="products" id="products">
+            <div class="container">
+                <h2 class="section-title">Наши новинки</h2>
+                <p class="section-subtitle">Легкость и свобода движений в каждой детали</p>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-img" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 300 300\'><rect width=\'300\' height=\'300\' fill=\'%23e2e8f0\'/><circle cx=\'150\' cy=\'150\' r=\'80\' fill=\'%232b5e3b\' opacity=\'0.2\'/><path d=\'M90 150 L210 150\' stroke=\'%232b5e3b\' stroke-width=\'10\' opacity=\'0.3\'/></svg>')"></div>
+                        <div class="product-info">
+                            <h4>Женский топ "Aura"</h4>
+                            <p>Из переработанного микрофиламента</p>
+                            <span class="product-price">3 990 ₽</span>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 300 300\'><rect width=\'300\' height=\'300\' fill=\'%23e2e8f0\'/><circle cx=\'150\' cy=\'150\' r=\'80\' fill=\'%232b5e3b\' opacity=\'0.2\'/><rect x=\'90\' y=\'120\' width=\'120\' height=\'60\' fill=\'%232b5e3b\' opacity=\'0.3\'/></svg>')"></div>
+                        <div class="product-info">
+                            <h4>Мужские шорты "Terra"</h4>
+                            <p>Органический хлопок, 4 цвета</p>
+                            <span class="product-price">2 490 ₽</span>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 300 300\'><rect width=\'300\' height=\'300\' fill=\'%23e2e8f0\'/><circle cx=\'150\' cy=\'150\' r=\'80\' fill=\'%232b5e3b\' opacity=\'0.2\'/><path d=\'M80 150 L220 150\' stroke=\'%232b5e3b\' stroke-width=\'20\' opacity=\'0.3\'/></svg>')"></div>
+                        <div class="product-info">
+                            <h4>Леггинсы "Luna"</h4>
+                            <p>С защитой от УФ и влагоотведением</p>
+                            <span class="product-price">4 290 ₽</span>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 300 300\'><rect width=\'300\' height=\'300\' fill=\'%23e2e8f0\'/><circle cx=\'150\' cy=\'150\' r=\'80\' fill=\'%232b5e3b\' opacity=\'0.2\'/><circle cx=\'150\' cy=\'150\' r=\'40\' fill=\'%232b5e3b\' opacity=\'0.3\'/></svg>')"></div>
+                        <div class="product-info">
+                            <h4>Футболка "Eco Cotton"</h4>
+                            <p>Унисекс, 100% органический хлопок</p>
+                            <span class="product-price">1 990 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- О бренде -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2>Мы изменили подход к спортивной одежде</h2>
+                    <p>VELORA родилась из любви к спорту и заботы о природе. В 2020 году мы задались вопросом: почему спортивная индустрия до сих пор использует тонны первичного пластика? С тех пор мы создаём коллекции исключительно из переработанных материалов, не жертвуя качеством и дизайном.</p>
+                    <p>Наша цель — вдохновить миллионы людей двигаться осознанно, выбирая вещи, которые не вредят планете.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">довольных клиентов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15т</div>
+                            <div class="stat-label">переработано пластика</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">эко-материалы</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image"></div>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <h2 class="section-title">Что говорят о нас</h2>
+                <p class="section-subtitle">Спортсмены, блогеры и просто любители активного образа жизни</p>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"После того как перешёл на VELORA, забыл о дискомфорте. Вещи реально дышат и не теряют форму после сотни стирок. А главное — я знаю, что не вредил природе".</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h5>Алексей Петров</h5>
+                                <p>марафонец, блогер</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Обожаю их леггинсы! Идеально сидят, ничего не просвечивает, и такие мягкие. Плюс дизайн — всегда получаю комплименты в зале".</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h5>Елена Смирнова</h5>
+                                <p>инструктор йоги</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Купил толстовку из переработанного флиса — это нечто! Тёплая, лёгкая и выглядит дорого. Теперь хочу ещё и штаны".</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"></div>
+                            <div class="author-info">
+                                <h5>Дмитрий Волков</h5>
+                                <p>путешественник</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Подписка -->
+        <section class="newsletter" id="contact">
+            <div class="container">
+                <h2>Будь в курсе новинок</h2>
+                <p>Подпишись на рассылку и получи скидку 10% на первый заказ. Никакого спама, только полезное.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Твой e-mail" required>
+                    <button type="submit" class="btn">Подписаться</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-col">
+                    <a href="#" class="logo">VELORA</a>
+                    <p>Экологичная спортивная одежда для тех, кто заботится о будущем планеты.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Telegram">📱</a>
+                        <a href="#" aria-label="YouTube">▶️</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Магазин</h4>
+                    <ul>
+                        <li><a href="#">Женщинам</a></li>
+                        <li><a href="#">Мужчинам</a></li>
+                        <li><a href="#">Аксессуары</a></li>
+                        <li><a href="#">Новинки</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Информация</h4>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li>8 (800) 123-45-67</li>
+                        <li>hello@velora.ru</li>
+                        <li>Москва, ул. Зелёная, 15</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 VELORA. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Бургер-меню
+        const burger = document.getElementById('burger');
+        const navMenu = document.getElementById('navMenu');
+
+        burger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            // Анимация бургера в крестик
+            burger.classList.toggle('active');
+            const spans = burger.querySelectorAll('span');
+            if (burger.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(7px, 7px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Закрыть меню при клике на ссылку
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 600) {
+                    navMenu.classList.remove('active');
+                    burger.classList.remove('active');
+                    const spans = burger.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+        });
+
+        // Плавный скролл к якорям (можно не прописывать, т.к. в CSS scroll-behavior: smooth)
+    </script>
+</body>
+</html>
